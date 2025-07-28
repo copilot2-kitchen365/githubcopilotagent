@@ -82,9 +82,10 @@ section h2 i {
 .form-group select {
     padding: 0.8rem;
     border: 2px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
+    background-color: #fff;
 }
 
 .form-group input:focus,
@@ -92,6 +93,58 @@ section h2 i {
     outline: none;
     border-color: #667eea;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Enhanced Select Dropdown Styling */
+.form-group select {
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    padding: 0.8rem 2.5rem 0.8rem 0.8rem;
+    font-weight: 500;
+    color: #495057;
+    cursor: pointer;
+    /* Custom dropdown arrow */
+    background-image: linear-gradient(45deg, transparent 50%, #667eea 50%),
+                      linear-gradient(135deg, #667eea 50%, transparent 50%);
+    background-position: calc(100% - 20px) calc(1em + 2px),
+                         calc(100% - 15px) calc(1em + 2px);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.form-group select:hover {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+}
+
+.form-group select:focus {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 4px 12px rgba(102, 126, 234, 0.15);
+    /* Enhanced dropdown arrow on focus */
+    background-image: linear-gradient(45deg, transparent 50%, #764ba2 50%),
+                      linear-gradient(135deg, #764ba2 50%, transparent 50%);
+}
+
+/* Option styling */
+.form-group select option {
+    padding: 0.5rem;
+    background-color: #fff;
+    color: #495057;
+    font-weight: 500;
+}
+
+.form-group select option:hover,
+.form-group select option:checked {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
 }
 
 .form-buttons {
@@ -216,11 +269,44 @@ section h2 i {
 }
 
 #departmentFilter {
-    padding: 0.8rem;
-    border: 2px solid #ddd;
-    border-radius: 5px;
+    padding: 0.8rem 2.5rem 0.8rem 0.8rem;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
     font-size: 1rem;
+    font-weight: 500;
     min-width: 200px;
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    color: #495057;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* Custom dropdown arrow */
+    background-image: linear-gradient(45deg, transparent 50%, #667eea 50%),
+                      linear-gradient(135deg, #667eea 50%, transparent 50%);
+    background-position: calc(100% - 20px) calc(1em + 2px),
+                         calc(100% - 15px) calc(1em + 2px);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+#departmentFilter:hover {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+}
+
+#departmentFilter:focus {
+    outline: none;
+    border-color: #667eea;
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 4px 12px rgba(102, 126, 234, 0.15);
+    transform: translateY(-1px);
+    /* Enhanced dropdown arrow on focus */
+    background-image: linear-gradient(45deg, transparent 50%, #764ba2 50%),
+                      linear-gradient(135deg, #764ba2 50%, transparent 50%);
 }
 
 /* Employee List Section */
