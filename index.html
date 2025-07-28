@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-users"></i> Employee Management System</h1>
+        </header>
+
+        <main>
+            <!-- Add Employee Form -->
+            <section class="add-employee-section">
+                <h2><i class="fas fa-user-plus"></i> Add New Employee</h2>
+                <form id="employeeForm" class="employee-form">
+                    <div class="form-group">
+                        <label for="employeeId">Employee ID:</label>
+                        <input type="text" id="employeeId" name="employeeId" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="department">Department:</label>
+                        <select id="department" name="department" required>
+                            <option value="">Select Department</option>
+                            <option value="IT">IT</option>
+                            <option value="HR">Human Resources</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Sales">Sales</option>
+                            <option value="Operations">Operations</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="position">Position:</label>
+                        <input type="text" id="position" name="position" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="salary">Salary:</label>
+                        <input type="number" id="salary" name="salary" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dateOfJoining">Date of Joining:</label>
+                        <input type="date" id="dateOfJoining" name="dateOfJoining" required>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Add Employee
+                        </button>
+                        <button type="reset" class="btn btn-secondary">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Search and Filter -->
+            <section class="search-section">
+                <h2><i class="fas fa-search"></i> Search & Filter</h2>
+                <div class="search-controls">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search by name, ID, or email...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <select id="departmentFilter">
+                        <option value="">All Departments</option>
+                        <option value="IT">IT</option>
+                        <option value="HR">Human Resources</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Operations">Operations</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Employee List -->
+            <section class="employee-list-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-list"></i> Employee List</h2>
+                    <div class="list-actions">
+                        <button id="exportBtn" class="btn btn-info">
+                            <i class="fas fa-download"></i> Export CSV
+                        </button>
+                        <span class="employee-count">Total: <span id="totalCount">0</span></span>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table id="employeeTable" class="employee-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Department</th>
+                                <th>Position</th>
+                                <th>Salary</th>
+                                <th>Date Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employeeTableBody">
+                            <!-- Employee rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="noEmployees" class="no-employees" style="display: none;">
+                    <i class="fas fa-users-slash"></i>
+                    <p>No employees found. Add some employees to get started!</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Edit Employee Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Edit Employee</h3>
+                <span class="close">&times;</span>
+            </div>
+            <form id="editEmployeeForm" class="employee-form">
+                <div class="form-group">
+                    <label for="editEmployeeId">Employee ID:</label>
+                    <input type="text" id="editEmployeeId" name="employeeId" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editFirstName">First Name:</label>
+                    <input type="text" id="editFirstName" name="firstName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editLastName">Last Name:</label>
+                    <input type="text" id="editLastName" name="lastName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editEmail">Email:</label>
+                    <input type="email" id="editEmail" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editPhone">Phone:</label>
+                    <input type="tel" id="editPhone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editDepartment">Department:</label>
+                    <select id="editDepartment" name="department" required>
+                        <option value="">Select Department</option>
+                        <option value="IT">IT</option>
+                        <option value="HR">Human Resources</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Operations">Operations</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editPosition">Position:</label>
+                    <input type="text" id="editPosition" name="position" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editSalary">Salary:</label>
+                    <input type="number" id="editSalary" name="salary" min="0" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editDateOfJoining">Date of Joining:</label>
+                    <input type="date" id="editDateOfJoining" name="dateOfJoining" required>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Update Employee
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
