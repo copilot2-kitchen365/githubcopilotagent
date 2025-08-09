@@ -98,6 +98,12 @@ function handleAddEmployee(event) {
         return;
     }
     
+    // Validate US phone number format
+    if (!validateUSPhoneNumber(employeeData.phone)) {
+        showAlert('Please enter a valid US phone number (e.g., (555) 123-4567, 555-123-4567, or 5551234567)', 'error');
+        return;
+    }
+    
     // Create new employee
     const employee = new Employee(
         employeeData.employeeId,
@@ -168,6 +174,12 @@ function handleEditEmployee(event) {
     
     if (emailExists) {
         showAlert('Email already exists!', 'error');
+        return;
+    }
+    
+    // Validate US phone number format
+    if (!validateUSPhoneNumber(employeeData.phone)) {
+        showAlert('Please enter a valid US phone number (e.g., (555) 123-4567, 555-123-4567, or 5551234567)', 'error');
         return;
     }
     
@@ -290,6 +302,48 @@ function isEmployeeIdExists(employeeId) {
 // Check if email exists
 function isEmailExists(email) {
     return employees.some(emp => emp.email === email);
+}
+
+// Validate US phone number format
+function validateUSPhoneNumber(phone) {
+    // Remove all non-digit characters to check basic format
+    const digitsOnly = phone.replace(/\D/g, '');
+    
+    // Check if it's a valid length (10 digits or 11 digits starting with 1)
+    if (digitsOnly.length === 10) {
+        // 10 digit format - should not start with 0 or 1
+        if (digitsOnly[0] === '0' || digitsOnly[0] === '1') {
+            return false;
+        }
+    } else if (digitsOnly.length === 11) {
+        // 11 digit format - should start with 1
+        if (digitsOnly[0] !== '1') {
+            return false;
+        }
+        // Area code (second digit) should not be 0 or 1
+        if (digitsOnly[1] === '0' || digitsOnly[1] === '1') {
+            return false;
+        }
+    } else {
+        return false;
+    }
+    
+    // Define valid US phone number patterns
+    const phonePatterns = [
+        /^\(\d{3}\) \d{3}-\d{4}$/,           // (555) 123-4567
+        /^\d{3}-\d{3}-\d{4}$/,               // 555-123-4567
+        /^\d{3}\.\d{3}\.\d{4}$/,             // 555.123.4567
+        /^\d{3} \d{3} \d{4}$/,               // 555 123 4567
+        /^\d{10}$/,                          // 5551234567
+        /^1-\d{3}-\d{3}-\d{4}$/,             // 1-555-123-4567
+        /^\+1-\d{3}-\d{3}-\d{4}$/,           // +1-555-123-4567
+        /^\+1 \(\d{3}\) \d{3}-\d{4}$/,       // +1 (555) 123-4567
+        /^\+1 \d{3} \d{3} \d{4}$/,           // +1 555 123 4567
+        /^1\d{10}$/,                         // 15551234567
+        /^\+1\d{10}$/                        // +15551234567
+    ];
+    
+    return phonePatterns.some(pattern => pattern.test(phone));
 }
 
 // Save employees to localStorage
