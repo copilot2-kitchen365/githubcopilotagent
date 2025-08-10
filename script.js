@@ -41,8 +41,9 @@ window.addEventListener('click', function(event) {
 
 // Employee class
 class Employee {
-    constructor(employeeId, firstName, lastName, email, phone, department, position, salary, dateOfJoining) {
+    constructor(employeeId, employeeCode, firstName, lastName, email, phone, department, position, salary, dateOfJoining) {
         this.employeeId = employeeId;
+        this.employeeCode = employeeCode;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -107,6 +108,7 @@ function handleAddEmployee(event) {
     // Create new employee
     const employee = new Employee(
         employeeData.employeeId,
+        employeeData.employeeCode,
         employeeData.firstName,
         employeeData.lastName,
         employeeData.email,
@@ -143,6 +145,7 @@ function editEmployee(employeeId) {
     
     // Populate edit form
     document.getElementById('editEmployeeId').value = employee.employeeId;
+    document.getElementById('editEmployeeCode').value = employee.employeeCode;
     document.getElementById('editFirstName').value = employee.firstName;
     document.getElementById('editLastName').value = employee.lastName;
     document.getElementById('editEmail').value = employee.email;
@@ -186,6 +189,7 @@ function handleEditEmployee(event) {
     // Update employee
     const updatedEmployee = new Employee(
         employeeData.employeeId,
+        employeeData.employeeCode,
         employeeData.firstName,
         employeeData.lastName,
         employeeData.email,
@@ -239,6 +243,7 @@ function displayEmployees(employeesToShow = employees) {
     employeeTableBody.innerHTML = employeesToShow.map(employee => `
         <tr>
             <td>${employee.employeeId}</td>
+            <td>${employee.employeeCode}</td>
             <td>${employee.getFullName()}</td>
             <td>${employee.email}</td>
             <td>${employee.phone}</td>
@@ -271,6 +276,7 @@ function filterEmployees() {
     if (searchTerm) {
         filteredEmployees = filteredEmployees.filter(employee => 
             employee.employeeId.toLowerCase().includes(searchTerm) ||
+            employee.employeeCode.toLowerCase().includes(searchTerm) ||
             employee.getFullName().toLowerCase().includes(searchTerm) ||
             employee.email.toLowerCase().includes(searchTerm) ||
             employee.phone.includes(searchTerm) ||
@@ -359,6 +365,7 @@ function loadEmployees() {
         employees = employeeData.map(emp => {
             const employee = new Employee(
                 emp.employeeId,
+                emp.employeeCode || '', // Handle existing data without employeeCode
                 emp.firstName,
                 emp.lastName,
                 emp.email,
@@ -408,6 +415,7 @@ function exportToCSV() {
     
     const headers = [
         'Employee ID',
+        'Employee Code',
         'First Name',
         'Last Name',
         'Email',
@@ -422,6 +430,7 @@ function exportToCSV() {
         headers.join(','),
         ...employees.map(emp => [
             emp.employeeId,
+            emp.employeeCode,
             emp.firstName,
             emp.lastName,
             emp.email,
@@ -449,11 +458,11 @@ function exportToCSV() {
 // Sample data for demonstration (uncomment to add sample employees)
 function addSampleData() {
     const sampleEmployees = [
-        new Employee('EMP001', 'John', 'Doe', 'john.doe@company.com', '+1-555-0123', 'IT', 'Software Developer', 75000, '2023-01-15'),
-        new Employee('EMP002', 'Jane', 'Smith', 'jane.smith@company.com', '+1-555-0124', 'HR', 'HR Manager', 65000, '2023-02-20'),
-        new Employee('EMP003', 'Mike', 'Johnson', 'mike.johnson@company.com', '+1-555-0125', 'Finance', 'Financial Analyst', 55000, '2023-03-10'),
-        new Employee('EMP004', 'Sarah', 'Williams', 'sarah.williams@company.com', '+1-555-0126', 'Marketing', 'Marketing Specialist', 50000, '2023-04-05'),
-        new Employee('EMP005', 'Robert', 'Brown', 'robert.brown@company.com', '+1-555-0127', 'Sales', 'Sales Representative', 45000, '2023-05-12')
+        new Employee('EMP001', 'EC001', 'John', 'Doe', 'john.doe@company.com', '+1-555-0123', 'IT', 'Software Developer', 75000, '2023-01-15'),
+        new Employee('EMP002', 'EC002', 'Jane', 'Smith', 'jane.smith@company.com', '+1-555-0124', 'HR', 'HR Manager', 65000, '2023-02-20'),
+        new Employee('EMP003', 'EC003', 'Mike', 'Johnson', 'mike.johnson@company.com', '+1-555-0125', 'Finance', 'Financial Analyst', 55000, '2023-03-10'),
+        new Employee('EMP004', 'EC004', 'Sarah', 'Williams', 'sarah.williams@company.com', '+1-555-0126', 'Marketing', 'Marketing Specialist', 50000, '2023-04-05'),
+        new Employee('EMP005', 'EC005', 'Robert', 'Brown', 'robert.brown@company.com', '+1-555-0127', 'Sales', 'Sales Representative', 45000, '2023-05-12')
     ];
     
     employees.push(...sampleEmployees);
