@@ -22,6 +22,7 @@ A simple, responsive web-based Employee Management System built with HTML, CSS, 
 
 ### 📊 Employee Information Managed
 - Employee ID (auto-generated)
+- Employee Code
 - First Name & Last Name
 - Email Address
 - Phone Number
